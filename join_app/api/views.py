@@ -41,7 +41,7 @@ def task_detail(request, pk):
         return Response({"error": "Task not found"}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = TaskSerializer(task)
+        serializer = TaskSerializer(task, many=True)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
