@@ -31,9 +31,9 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UserSerializer(serializers.ModelSerializer):
-    tasks = TaskSerializer(many=True, read_only=True)
-    contacts = ContactSerializer(many=True, read_only=True)
+    # tasks = TaskSerializer(many=True, read_only=True)
+    # contacts = ContactSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['name']

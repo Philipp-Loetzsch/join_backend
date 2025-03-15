@@ -2,7 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from join_app.models import Task, Contact, User
-from .serializer import TaskSerializer, ContactSerializer
+from .serializer import TaskSerializer, ContactSerializer, UserSerializer
+from rest_framework import generics
 
 @api_view(['GET'])
 def user_name(request, pk):
@@ -75,7 +76,7 @@ def user_contacts(request, user_id):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET','PUT', 'DELETE'])
 def contact_detail(request, pk):
     try:
         contact = Contact.objects.get(pk=pk)
@@ -96,3 +97,7 @@ def contact_detail(request, pk):
     elif request.method == 'DELETE':
         contact.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
