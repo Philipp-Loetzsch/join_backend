@@ -98,6 +98,6 @@ def contact_detail(request, pk):
         contact.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class UserListView(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# class UserListView(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
