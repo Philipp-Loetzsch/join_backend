@@ -20,7 +20,7 @@ class Task(models.Model):
     title = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
     description = models.TextField()
-    dueDate = models.DateTimeField()  
+    dueDate = models.DateField()  
     position = models.IntegerField()  
     prio = models.CharField(max_length=20, choices=[("low", "Low"), ("medium", "Medium"), ("urgent", "Urgent")])  
     status = models.CharField(max_length=50, choices=[("todo", "To Do"), ("inProgress", "In Progress"), ("awaitFeedback", "Await Feedback"), ("done", "Done")])
