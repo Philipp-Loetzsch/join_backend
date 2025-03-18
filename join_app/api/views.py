@@ -47,13 +47,12 @@ class SubtaskListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         task_id = self.kwargs["task_id"]
-        return Subtask.objects.filter(tasks__id=task_id)
+        return Subtask.objects.filter(task__id=task_id)
 
     def perform_create(self, serializer):
         task_id = self.kwargs["task_id"]
         task = generics.get_object_or_404(Task, id=task_id, user=self.request.user)
-        subtask = serializer.save()
-        task.subtasks.add(subtask) 
+        serializer.save(task=task) 
 
 class SubtaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubtaskSerializer
@@ -61,24 +60,5 @@ class SubtaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         task_id = self.kwargs["task_id"]
-        return Subtask.objects.filter(tasks__id=task_id)
-
-# class AdminContactListView(generics.ListAPIView):
-#     serializer_class = ContactSerializer
-#     permission_classes = [IsAuthenticated]
-
-#     def get_queryset(self):
-#         if not self.request.user.is_staff:
-#             return Contact.objects.none() 
-#         return Contact.objects.all()
-
-# class AdminContactDetailView(generics.RetrieveUpdateDestroyAPIView):
-#     serializer_class = ContactSerializer
-#     permission_classes = [IsAuthenticated]
-
-#     def get_queryset(self):
-#         if not self.request.user.is_staff:
-#             return Contact.objects.none()
-#         return Contact.objects.all()
-
+        return Subtask.objects.filter(task__id=task_id)
 

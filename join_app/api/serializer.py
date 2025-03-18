@@ -45,7 +45,7 @@ class SubtaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subtask
         fields = '__all__'
-        
+        read_only_fields = ['task']
 # class TaskSerializer(serializers.ModelSerializer):
 #     subtasks = SubtaskSerializer(many=True, read_only=True)
 #     subtask_ids = serializers.PrimaryKeyRelatedField(
