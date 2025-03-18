@@ -3,8 +3,8 @@ from rest_framework import status
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from join_app.models import Task, Contact, UserContact, User
-from .serializer import TaskSerializer, ContactSerializer, UserContactSerializer
+from join_app.models import Task, UserContact, Subtask
+from .serializer import TaskSerializer, UserContactSerializer, SubtaskSerializer
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
@@ -39,6 +39,29 @@ class UserContactDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return UserContact.objects.filter(user=self.request.user)
+    
+    
+class SubtaskListCreateView(generics.ListCreateAPIView):
+    serializer_class = SubtaskSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        task_id = self.kwargs["task_id"]
+        return Subtask.objects.filter(tasks__id=task_id)
+
+    def perform_create(self, serializer):
+        task_id = self.kwargs["task_id"]
+        task = generics.get_object_or_404(Task, id=task_id, user=self.request.user)
+        subtask = serializer.save()
+        task.subtasks.add(subtask) 
+
+class SubtaskDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = SubtaskSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        task_id = self.kwargs["task_id"]
+        return Subtask.objects.filter(tasks__id=task_id)
 
 # class AdminContactListView(generics.ListAPIView):
 #     serializer_class = ContactSerializer
