@@ -19,7 +19,7 @@ class Subtask(models.Model):
     complete = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title
+        return f"{self.task} - {self.title}"
 
 class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="task") 

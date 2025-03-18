@@ -14,6 +14,6 @@ urlpatterns = [
     path('api/user/contacts/', UserContactListCreateView.as_view(), name='user-contacts'),
     path('api/user/contacts/<int:pk>/', UserContactDetailView.as_view(), name='user-contact-detail'),
     
-    path('<int:task_id>/subtasks/', SubtaskListCreateView.as_view(), name='subtask-list'),
-    path('<int:task_id>/subtasks/<int:pk>/', SubtaskDetailView.as_view(), name='subtask-detail'),
+    path('api/user/tasks/<int:task_id>/subtasks/', SubtaskListCreateView.as_view(), name='subtask-list'),
+    path('api/user/tasks/<int:task_id>/subtasks/<int:pk>/', SubtaskDetailView.as_view(), name='subtask-detail'),
 ]

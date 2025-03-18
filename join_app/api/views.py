@@ -34,14 +34,18 @@ class UserContactDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class SubtaskListCreateView(generics.ListCreateAPIView):
     serializer_class = SubtaskSerializer
-
+    
     def get_queryset(self):
         return Subtask.objects.filter(task__user=self.request.user)
 
     def perform_create(self, serializer):
         task_id = self.kwargs["task_id"]
         task = get_object_or_404(Task, id=task_id, user=self.request.user)
-        serializer.save(task=task)
+        
+        # Subtask speichern und der Task zuweisen
+        subtask = serializer.save(task=task)  # Task explizit zuweisen
+        task.subtasks.add(subtask)  # Subtask zu den Subtasks der Task hinzufügen
+
 
 class SubtaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubtaskSerializer
