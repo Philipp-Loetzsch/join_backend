@@ -1,43 +1,61 @@
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-from join_app.models import Task, Contact, User
-from .serializer import TaskSerializer, ContactSerializer, UserSerializer
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
+from join_app.models import Task, Contact, UserContact, User
+from .serializer import TaskSerializer, ContactSerializer, UserContactSerializer
 
-
-class UserView( generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    
-class ContactDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Contact.objects.all()
-    serializer_class = ContactSerializer
-    
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
 
 class UserTaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user_id = self.kwargs["user_id"]
-        user = get_object_or_404(User, pk=user_id)
-        return user.tasks.all()
+        return Task.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 class UserContactListCreateView(generics.ListCreateAPIView):
-    serializer_class = ContactSerializer
+    serializer_class = UserContactSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user_id = self.kwargs["user_id"]
-        user = get_object_or_404(User, pk=user_id)
-        return user.contacts.all()
+        return UserContact.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class UserContactDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserContactSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return UserContact.objects.filter(user=self.request.user)
+
+# class AdminContactListView(generics.ListAPIView):
+#     serializer_class = ContactSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def get_queryset(self):
+#         if not self.request.user.is_staff:
+#             return Contact.objects.none() 
+#         return Contact.objects.all()
+
+# class AdminContactDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = ContactSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def get_queryset(self):
+#         if not self.request.user.is_staff:
+#             return Contact.objects.none()
+#         return Contact.objects.all()
 
 
-# class UserListView(generics.ListAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
