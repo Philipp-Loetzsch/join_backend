@@ -7,7 +7,8 @@ task_templates =[
       "category": "Technical Task",
       "subtasks": [{"title": "Debug issue", "complete":False}, {"title": "Test fix", "complete":False}],
       "status": "todo",
-      "position": 0
+      "position": 0,
+      "assignedTo": [{"contact_id": 1}, {"contact_id": 3}]
     },
     {
       "title": "Design Homepage",

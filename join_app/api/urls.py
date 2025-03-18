@@ -3,7 +3,6 @@ from .views import (
     TaskDetailView, UserTaskListCreateView,
     UserContactListCreateView, UserContactDetailView,
     SubtaskListCreateView, SubtaskDetailView
-    # AdminContactListView, AdminContactDetailView
 )
 
 urlpatterns = [
