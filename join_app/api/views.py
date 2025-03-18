@@ -5,60 +5,48 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from join_app.models import Task, UserContact, Subtask
 from .serializer import TaskSerializer, UserContactSerializer, SubtaskSerializer
+from join_app.permissions import IsOwner
+
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]
+    queryset = Task.objects.all()  # Kein extra Filter nötig
 
-    def get_queryset(self):
-        return Task.objects.filter(user=self.request.user)
 
 class UserTaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return Task.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        """Setzt den User automatisch beim Erstellen"""
         serializer.save(user=self.request.user)
+
 
 class UserContactListCreateView(generics.ListCreateAPIView):
     serializer_class = UserContactSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return UserContact.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+
 class UserContactDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserContactSerializer
-    permission_classes = [IsAuthenticated]
+    queryset = UserContact.objects.all()
 
-    def get_queryset(self):
-        return UserContact.objects.filter(user=self.request.user)
-    
-    
+
 class SubtaskListCreateView(generics.ListCreateAPIView):
     serializer_class = SubtaskSerializer
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        task_id = self.kwargs["task_id"]
-        return Subtask.objects.filter(task__id=task_id)
+        """Nur Subtasks von Tasks des aktuellen Users abrufen"""
+        return Subtask.objects.filter(task__user=self.request.user)
 
     def perform_create(self, serializer):
+        """Stellt sicher, dass der Subtask nur zu eigenen Tasks hinzugefügt wird"""
         task_id = self.kwargs["task_id"]
-        task = generics.get_object_or_404(Task, id=task_id, user=self.request.user)
-        serializer.save(task=task) 
+        task = get_object_or_404(Task, id=task_id, user=self.request.user)
+        serializer.save(task=task)
+
 
 class SubtaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SubtaskSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        task_id = self.kwargs["task_id"]
-        return Subtask.objects.filter(task__id=task_id)
-
+    queryset = Subtask.objects.all()
