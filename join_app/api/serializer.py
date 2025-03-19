@@ -49,9 +49,9 @@ class UserContactSerializer(serializers.ModelSerializer):
         exclude = ['user']
 
 class TaskSerializer(serializers.ModelSerializer):
-    # Für die Anzeige der vorhandenen Subtasks
+
     subtasks = SubtaskSerializer(many=True, read_only=True)
-    # Für das Erstellen von Subtasks
+  
     subtasks_data = SubtaskSerializer(many=True, write_only=True, required=False)
     
     assignTo = UserContactSerializer(many=True, read_only=True)
@@ -68,14 +68,16 @@ class TaskSerializer(serializers.ModelSerializer):
         read_only_fields = ['user']
 
     def create(self, validated_data):
-        # Extrahiere die Subtask-Daten (falls vorhanden)
         subtasks_data = validated_data.pop('subtasks_data', [])
-        # Erstelle den Task
+        assignTo_ids = validated_data.pop('assignTo', [])
+              
         task = Task.objects.create(**validated_data)
-        # Erstelle die Subtasks und verknüpfe sie mit dem Task
+        
         for subtask_data in subtasks_data:
             Subtask.objects.create(task=task, **subtask_data)
-        # Damit die Rückbeziehung (reverse relation) aktualisiert wird:
+            
+        task.assignTo.set(assignTo_ids)
+     
         task.refresh_from_db()
         return task
 

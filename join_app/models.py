@@ -11,39 +11,6 @@ class UserContact(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.custom_name} ({self.custom_email})"
-
-
-# class Subtask(models.Model):
-#     task = models.ForeignKey('Task', on_delete=models.CASCADE, related_name="subtask")
-#     title = models.CharField(max_length=50)
-#     complete = models.BooleanField(default=False)
-
-#     def __str__(self):
-#         return f"{self.task} - {self.title}"
-
-# class Task(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="task") 
-#     title = models.CharField(max_length=50)
-#     category = models.CharField(max_length=50)
-#     description = models.TextField()
-#     dueDate = models.DateField()
-#     position = models.IntegerField()
-#     prio = models.CharField(max_length=20, choices=[("low", "Low"), ("medium", "Medium"), ("urgent", "Urgent")])
-#     status = models.CharField(max_length=50, choices=[("todo", "To Do"), ("inProgress", "In Progress"), ("awaitFeedback", "Await Feedback"), ("done", "Done")])
-#     assignTo = models.ManyToManyField(UserContact, related_name="tasks_list", blank=True)
-
-#     def __str__(self):
-#         return f"{self.user} - {self.title}"
-
-
-# class Subtask(models.Model):
-#     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="subtask")
-#     title = models.CharField(max_length=50)
-#     complete = models.BooleanField(default=False)
-
-#     def __str__(self):
-#         return f"{self.task} - {self.title}"
-
 class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks") 
     title = models.CharField(max_length=50)
@@ -56,7 +23,7 @@ class Task(models.Model):
     assignTo = models.ManyToManyField(UserContact, related_name="tasks_list", blank=True)
     
     def __str__(self):
-        return f"{self.user} - {self.title}"
+        return f"TASK_ID: [{self.id}] USER:{self.user} TITLE: {self.title}"
 
 
 class Subtask(models.Model):
@@ -65,4 +32,4 @@ class Subtask(models.Model):
     complete = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.task} - {self.title}"
+        return f"SUBTASK_ID: [{self.id}]{self.task}"
