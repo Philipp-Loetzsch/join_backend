@@ -51,15 +51,5 @@ task_templates =[
       "position": 2
     },    
     
-    {
-    "subtasks_data": [{"title": "Debug issue", "complete":False}, {"title": "Test fix", "complete":False}],
-    "assignTo_ids": [],
-    "title": "test subtasks",
-    "category": "Technical Task",
-    "description": "haha",
-    "dueDate": "2025-04-05",
-    "position": 1,
-    "prio": "low",
-    "status": "todo"
-}
+
 ]
