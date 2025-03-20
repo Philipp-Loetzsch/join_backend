@@ -150,8 +150,8 @@ REST_FRAMEWORK = {
           'join_app.permissions.IsOwner',
         
     ],
-    #  'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework.authentication.TokenAuthentication',
-    # ],
+      'DEFAULT_AUTHENTICATION_CLASSES': [
+         'rest_framework.authentication.TokenAuthentication',
+    ],
     
 }
