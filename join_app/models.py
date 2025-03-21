@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 
 class UserContact(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_contacts")
-    custom_name = models.CharField(max_length=255, blank=True, null=True) 
-    custom_email = models.EmailField(blank=True, null=True)   
-    custom_phone = models.CharField(max_length=20, blank=True, null=True) 
-    custom_shortcut = models.CharField(max_length=2, blank=True, null=True)
-    custom_color = models.CharField(max_length=7, blank=True, null=True) 
+    name = models.CharField(max_length=255, blank=True, null=True) 
+    email = models.EmailField(blank=True, null=True)   
+    phone = models.CharField(max_length=20, blank=True, null=True) 
+    shortcut = models.CharField(max_length=2, blank=True, null=True)
+    color = models.CharField(max_length=7, blank=True, null=True) 
     
     def __str__(self):
-        return f"{self.user.username} - {self.custom_name} ({self.custom_email})"
+        return f"{self.user.username} - {self.name} ({self.email})"
 class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tasks") 
     title = models.CharField(max_length=50)
