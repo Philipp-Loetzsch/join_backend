@@ -18,9 +18,9 @@ class Task(models.Model):
     description = models.TextField()
     dueDate = models.IntegerField()
     position = models.IntegerField()
-    prio = models.CharField(max_length=20, choices=[("low", "Low"), ("medium", "Medium"), ("urgent", "Urgent")])
+    prio = models.CharField(max_length=20, choices=[("Low", "Low"), ("Medium", "Medium"), ("Urgent", "Urgent")])
     status = models.CharField(max_length=50, choices=[("todo", "To Do"), ("inProgress", "In Progress"), ("awaitFeedback", "Await Feedback"), ("done", "Done")])
-    assignTo = models.ManyToManyField(UserContact, related_name="tasks_list", blank=True)
+    assignTo = models.ManyToManyField(UserContact, related_name="tasks_list", blank=False)
     
     def __str__(self):
         return f"TASK_ID: [{self.id}] USER:{self.user} TITLE: {self.title}"
