@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from user_auth_app.models import UserProfile
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,9 +33,29 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account = User(
             email=email, 
             username=self.validated_data['username'], 
-            first_name=self.validated_data.get('first_name', ''),  # Falls nicht angegeben, Standardwert ''
-            last_name=self.validated_data.get('last_name', '')  # Falls nicht angegeben, Standardwert ''
+            first_name=self.validated_data.get('first_name', ''), 
+            last_name=self.validated_data.get('last_name', '') 
         )
         account.set_password(pw)
         account.save()
         return account
+class LogInSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+    
+    def validate(self, data):
+        email = data.get('email')
+        password = data.get('password')
+        
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError({'email': 'Email existiert nicht'})
+        
+        # Authentifizieren des Benutzers
+        user = authenticate(username=user.username, password=password)
+        if user is None:
+            raise serializers.ValidationError({'password': 'Falsches Passwort'})
+        
+        data['user'] = user
+        return data
