@@ -26,9 +26,9 @@ class RegistrationView(APIView):
                 'first_name': saved_account.first_name,
                 'last_name': saved_account.last_name
             }
-        else:
-            data=serializer.errors
-        return Response(data)            
+            return Response(data, status=status.HTTP_200_OK)    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+           
 
 class LogInView(APIView):
     authentication_classes = []
@@ -46,9 +46,6 @@ class LogInView(APIView):
                 'username': user.username,
                 'first_name': user.first_name,
                 'last_name': user.last_name
-            }
-            # Token für den Benutzer abrufen oder erstellen
-         
-            
+            }    
             return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
