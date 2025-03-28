@@ -1,17 +1,3 @@
-# from rest_framework import generics
-# from user_auth_app.models import UserProfile
-# from .serializers import UserProfileSerializer
-
-# class UserProfileList(generics.ListCreateAPIView):
-#     queryset = UserProfile.objects.all()
-#     serializer_class = UserProfileSerializer
-
-# class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = UserProfile.objects.all()
-#     serializer_class = UserProfileSerializer
-
-
-
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.contrib.auth import login
@@ -45,7 +31,7 @@ class RegistrationView(APIView):
         return Response(data)            
 
 class LogInView(APIView):
-    authentication_classes = []  # Deaktiviert die Authentifizierungspflicht für diese View
+    authentication_classes = []
     permission_classes = [AllowAny]
     
     def post(self, request):
@@ -66,24 +52,3 @@ class LogInView(APIView):
             
             return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # def login_view(request):
-    #     email = request.data.get("email")
-    #     password = request.data.get("password")
-
-    #     if not email or not password:
-    #         return Response({"error": "E-Mail und Passwort sind erforderlich"}, status=400)
-
-    #     # Benutzer anhand der E-Mail finden
-    #     try:
-    #         user = User.objects.get(email=email)
-    #     except User.DoesNotExist:
-    #         return Response({"error": "Benutzer nicht gefunden"}, status=404)
-
-    #     # Passwort prüfen
-    #     user = authenticate(username=user.username, password=password)
-    #     if user:
-    #         token, created = Token.objects.get_or_create(user=user)
-    #         return Response({"token": token.key, "username": user.username})
-
-    #     return Response({"error": "Ungültige Anmeldeinformationen"}, status=400)

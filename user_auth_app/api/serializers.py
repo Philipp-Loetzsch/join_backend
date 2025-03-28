@@ -50,12 +50,10 @@ class LogInSerializer(serializers.Serializer):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            raise serializers.ValidationError({'email': 'Email existiert nicht'})
-        
-        # Authentifizieren des Benutzers
+            raise serializers.ValidationError({'email': 'Email does not exist'})
         user = authenticate(username=user.username, password=password)
         if user is None:
-            raise serializers.ValidationError({'password': 'Falsches Passwort'})
+            raise serializers.ValidationError({'password': 'Wrong password'})
         
         data['user'] = user
         return data
