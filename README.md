@@ -109,7 +109,7 @@ http://127.0.0.1:8000/
    * registration/
 
 
-## Docunemtation
+## Documentation
 
 Shows the documentation of the code created with sphinx
 [DCUMENTAION](docs/build/html/index.html)
