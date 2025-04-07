@@ -116,4 +116,4 @@ http://127.0.0.1:8000/
 * SQLite (Standard) / PostgreSQL (Optional)
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
