@@ -112,7 +112,7 @@ http://127.0.0.1:8000/
 ## Documentation
 
 Shows the documentation of the code created with sphinx
-[DCUMENTATION](docs/build/html/index.html)
+[DOCUMENTATION](docs/build/html/index.html)
 
 ## Built With
 * Python 3.13.1
