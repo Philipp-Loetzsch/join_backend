@@ -97,14 +97,14 @@ Follow this link to download the join_frontend [https://github.com/Philipp-Loetz
 
 ## Api-endpoints
 http://127.0.0.1:8000/
- **tasks api**
+* **tasks api**
    * api/user/tasks/
    * api/user/tasks/<int:pk>/
    * api/user/contacts/
    * api/user/contacts/<int:pk>/
    * api/user/tasks/<int:task_id>/subtasks/
    * api/user/tasks/<int:task_id>/subtasks/<int:pk>/
- **user api**
+* **user api**
    * login/
    * registration/
 
