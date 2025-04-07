@@ -8,7 +8,7 @@
 * [Prerequisites](#prerequisites)
 * [Installation](#installation)
 * [Frontetnd](#frontend)
-* [API Endpoints](#api-endpoints)
+* [API Endpoints](#api-endpoints), [Documentation](#documentation)
 * [Built with](#built-with)
 * [License](#license)
 
@@ -107,6 +107,12 @@ http://127.0.0.1:8000/
 * **user api**
    * login/
    * registration/
+
+
+## Docunemtation
+
+Shows the documentation of the code created with sphinx
+[DCUMENTAION](docs/build/html/index.html)
 
 ## Built With
 * Python 3.13.1
