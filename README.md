@@ -7,30 +7,28 @@
 * [Features](#features)
 * [Prerequisites](#prerequisites)
 * [Installation](#installation)
-* [Environment Variables](#environment-variables)
-* [Running the Development Server](#running-the-development-server)
-* [Running Tests](#running-tests)
-* [Built With](#built-with)
-* [API Endpoints](#api-endpoints) * [Deployment](#deployment) * [Contributing](#contributing) * [License](#license)
-* [Contact](#contact) 
+* [Frontetnd](#frontend)
+* [API Endpoints](#api-endpoints)
+* [Built with](#built-with)
+* [License](#license)
 
 ## Description
 
 This project was specifically created for the purpose of practicing with Python and the Django framework. 
-This backend makes it possible to read, edit, and delete data through the "Join" frontend.
+This backend makes it possible to read, edit, and delete tasks and contacts through the "Join" frontend.
+
 
 ## Features
 
-* Feature 1: Description
-* Feature 2: Description
-* Feature 3: Description
-* ...
+* Feature 1: Token based authorization
+* Feature 2: Manage tasks (CRUD) and  manage contacts (CRUD)
+* Feature 3: create example tasks and contacts after sign in
 
 ## Prerequisites
 
 Before you begin, ensure you have the following software installed:
 
-* **Python:** Version 3.13.1 or higher 
+* **Python:** Version 3.11+
 * **pip:** (Python Package Installer, usually included with Python)
 * all you need for this project is in [requirements.txt](requirements.txt)
 
@@ -40,8 +38,6 @@ Before you begin, ensure you have the following software installed:
 Follow these steps to set up the project locally:
 
 **Steps:**
-
-## Installation
 
 1.  **Get the Code:**
     ```bash
@@ -98,3 +94,26 @@ Follow these steps to set up the project locally:
 
 This Backend is only used with the following frontend named "join"
 Follow this link to download the join_frontend [https://github.com/Philipp-Loetzsch/join_frontend]
+
+## Api-endpoints
+http://127.0.0.1:8000/
+ **tasks api**
+   * api/user/tasks/
+   * api/user/tasks/<int:pk>/
+   * api/user/contacts/
+   * api/user/contacts/<int:pk>/
+   * api/user/tasks/<int:task_id>/subtasks/
+   * api/user/tasks/<int:task_id>/subtasks/<int:pk>/
+ **user api**
+   * login/
+   * registration/
+
+## Built With
+* Python 3.13.1
+* Django 5.1.6
+* Django REST framework
+* Django CORS Headers
+* SQLite (Standard) / PostgreSQL (Optional)
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
