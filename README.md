@@ -92,7 +92,7 @@ Follow these steps to set up the project locally:
 
 ## Frontend
 
-This Backend is only used with the following frontend named "join"
+This Backend is only used with the following frontend named "join"  
 Follow this link to download the join_frontend [https://github.com/Philipp-Loetzsch/join_frontend]
 
 ## Api-endpoints
